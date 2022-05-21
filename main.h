@@ -62,7 +62,7 @@ typedef struct flag_s
 {
 	unsigned char flag;
 	unsigned char value;
-} flag_r;
+} flag_t;
 
 int _printf(const char *format, ...);
 
