@@ -1,6 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdint.h>
 
 void cleanup(va_list args, buffer_t *output);
 int run_printf(const char *format, va_list args, buffer_t *output);
@@ -9,7 +7,7 @@ int _printf(const char *format, ...);
 /**
  * cleanup - Performs cleanup operations for _printf.
  *
- * @args: A va_list of arguments provided to _printf.
+ * @args: A va_list of arguments provided to _print.
  * @output: A buffer_t struct.
  */
 
@@ -25,9 +23,9 @@ void cleanup(va_list args, buffer_t *output)
  *
  * @format: Character string to print - may contain directives.
  * @output: A buffer_t struct containing a buffer.
- * @args: A va_list of arguments.
+ * @args: Ava_list of arguments.
  *
- * Return: THe number of characters stored to output.
+ * Return: The number of characters stored to output.
  */
 
 int run_printf(const char *format, va_list args, buffer_t *output)
@@ -35,15 +33,6 @@ int run_printf(const char *format, va_list args, buffer_t *output)
 	int i, wid, prec, ret = 0;
 	char tmp;
 	unsigned char flags, len;
-
-/**
- * int - Takes integer value
- *
- * @f: Pointer
- *
- * Return: Integer
- */
-
 	unsigned int (*f)(va_list, buffer_t *,
 			unsigned char, int, int, unsigned char);
 
@@ -55,31 +44,27 @@ int run_printf(const char *format, va_list args, buffer_t *output)
 			tmp = 0;
 			flags = handle_flags(format + i + 1, &tmp);
 			wid = handle_width(args, format + i + tmp + 1, &tmp);
-			prec = handle_precision(args, format + i + tmp + 1, &tmp);
+			prec = handle_precision(args, format, + i + tmp + 1,
+					&tmp);
 			len = handle_length(format + i + tmp + 1, &tmp);
-			f = handle_specifiers(format + i + tmp + 1);
 
+			f = handle_specifiers(format + i + tnm + 1, &tmp);
 			if (f != NULL)
 			{
 				i += tmp + 1;
 				ret += f(args, output, flags, wid, prec, len);
-
 				continue;
 			}
 			else if (*(format + i + tmp + 1) == '\0')
 			{
 				ret = -1;
-
 				break;
 			}
 		}
-
 		ret += _memcpy(output, (format + i), 1);
 		i += (len != 0) ? 1 : 0;
 	}
-
 	cleanup(args, output);
-
 	return (ret);
 }
 
@@ -99,9 +84,7 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 		return (-1);
-
 	output = init_buffer();
-
 	if (output == NULL)
 		return (-1);
 
