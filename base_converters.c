@@ -7,20 +7,21 @@ unsigned int convert_ubase(buffer_t *output,
 		unsigned char flags, int wid, int prec);
 
 /**
- * convert_base - Converts a signed long to an inputed base and stores
- * the result to a buffer contained in a struct.
+ * convert_sbase - Converts a signed long to an inputted base and stores
+ * The result to a buffer contained in a struct.
+ *
  * @output: A buffer_t struct containing a character array.
  * @num: A signed long to be converted.
  * @base: A pointer to a string containing the base to convert to.
  * @flags: Flag modifiers.
  * @wid: A width modifier.
- * @prec: A precision modifer.
+ * @prec: A precision modifier.
  *
- * Return: The number of bytes stroed to the buffer.
+ * Return: The number of bytes stored to the buffer.
  */
 
-unsigned int convert_sbase(buffer_t *output, long int num, char base,
-		unsiged char flags, int wid, int prec)
+unsigned int convert_sbase(buffer_t *output, long int num, char *base,
+		unsigned char flags, int wid, int prec)
 {
 	int size;
 	char digit, pad = '0';
@@ -35,10 +36,10 @@ unsigned int convert_sbase(buffer_t *output, long int num, char base,
 
 	else
 	{
-		for (; prec > 1; prec--, wid--) /* Hanlde precision */
+		for (; prec > 1; prec--, wid--) /* Handle precision */
 			ret += _memcpy(output, &pad, 1);
 
-		if (NEG_FLAG == 0)
+		if (NEG_FLAG == 0) /* Handle width */
 		{
 			pad = (ZERO_FLAG == 1) ? '0' : ' ';
 			for (; wid > 1; wid--)
@@ -57,7 +58,7 @@ unsigned int convert_sbase(buffer_t *output, long int num, char base,
  * stores the result to a buffer contained in a struct.
  *
  * @output: A buffer_t struct containing a character array.
- * @num: An nnsigned long to be converted.
+ * @num: An unsigned long to be converted.
  * @base: A pointer to a string containing the base to convert to.
  * @flags: Flag modifiers.
  * @wid: A width modifier.
@@ -66,7 +67,7 @@ unsigned int convert_sbase(buffer_t *output, long int num, char base,
  * Return: The number of bytes stored to the buffer.
  */
 
-unsigned int convert_ubase(buffer_t *output, unsigned long int num, char *base,
+unsigned int convert_ubase(buffer *output, unsigned ling int num, char base,
 		unsigned char flags, int wid, int prec)
 {
 	unsigned int size, ret = 1;

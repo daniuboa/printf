@@ -23,7 +23,7 @@ void cleanup(va_list args, buffer_t *output)
  *
  * @format: Character string to print - may contain directives.
  * @output: A buffer_t struct containing a buffer.
- * @args: Ava_list of arguments.
+ * @args: A va_list of arguments.
  *
  * Return: The number of characters stored to output.
  */
@@ -33,8 +33,17 @@ int run_printf(const char *format, va_list args, buffer_t *output)
 	int i, wid, prec, ret = 0;
 	char tmp;
 	unsigned char flags, len;
+
+/**
+ * int - tankes integer value
+ *
+ * @f: Pointer
+ *
+ * Return: Integer.
+ */
+
 	unsigned int (*f)(va_list, buffer_t *,
-			unsigned char, int, int, unsigned char);
+	unsigned char, int, int, unsigned char);
 
 	for (i = 0; *(format + i); i++)
 	{
@@ -44,11 +53,11 @@ int run_printf(const char *format, va_list args, buffer_t *output)
 			tmp = 0;
 			flags = handle_flags(format + i + 1, &tmp);
 			wid = handle_width(args, format + i + tmp + 1, &tmp);
-			prec = handle_precision(args, format, + i + tmp + 1,
+			prec = handle_precision(args, format + i + tmp + 1,
 					&tmp);
 			len = handle_length(format + i + tmp + 1, &tmp);
 
-			f = handle_specifiers(format + i + tnm + 1, &tmp);
+			f = handle_specifiers(format + i + tmp + 1);
 			if (f != NULL)
 			{
 				i += tmp + 1;
