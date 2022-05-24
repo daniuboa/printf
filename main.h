@@ -2,6 +2,14 @@
 #define MAIN_H
 
 #include <stdarg.h>
+#include <stdlib.h>
+
+/**
+* struct printer - format printer struct
+
+* @spec: The format specifier
+* @fn: The function that handles @specs
+*/
 
 int _putchar(char c);
 void _puts(char *str);
