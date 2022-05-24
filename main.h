@@ -5,12 +5,19 @@
 #include <stdlib.h>
 
 /**
-* struct printer - format printer struct
+ * struct printer - format printer struct
+ *
+ * @spec: The format specifier
+ * @fn: The function that handles @specs
+ */
 
-* @spec: The format specifier
-* @fn: The function that handles @specs
-*/
+typedef struct printer
+{
+	char *spec;
+	int (*fn)(va_list);
+} print_t;
 
+int print_char(va_list ap);
 int _putchar(char c);
 void _puts(char *str);
 int _strlen(char *s);
@@ -21,7 +28,7 @@ int _switch(char c, va_list arg);
 int print_character(va_list arg);
 int print_sign(va_list arg, int base);
 int print_unsign(va_list arg, int base);
-int print_string(va_list arg);
+int print_string(va_list ap);
 int print_ptr(va_list arg);
 int print_rot13(va_list arg);
 int print_rev(va_list arg);
