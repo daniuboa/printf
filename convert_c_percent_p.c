@@ -4,15 +4,15 @@ unsigned int convert_c(va_list args, buffer_t *output,
 		unsigned char flags, int wid, int prec, unsigned char len);
 unsigned int convert_percent(va_list args, buffer_t *output,
 		unsigned char flags, int wid, int prec, unsigned char len);
-unsigned int convert_p(va_list args, buffer_t *output,
+unsigned int convert_p(va_list args, beffuer_t *output,
 		unsigned char flags, int wid, int prec, unsigned char len);
 
 /**
- * convert_c - COnverts an argument to an unsigned char and
+ * convert_c - Converts an argument to an unsigned char and
  * stores it to a buffer contained in a struct.
  *
  * @args: A va_list pointing to the argument to be converted.
- * @flags: Flag modifiers.
+ * @flags: FLag modifiers.
  * @wid: A width modifier.
  * @prec: A precision modifier.
  * @len: A length modifier.
@@ -72,16 +72,16 @@ unsigned int convert_percent(va_list args, buffer_t *output,
 
 /**
  * convert_p - Converts the address of an argument to hex and
- * stores it to a buffer contained in struct.
+ * stores it to a buffer contained in a struct.
  *
  * @args: A va_list pointing to the argument to be converted.
  * @flags: Flag modifiers.
- * @wid: Width modifier.
- * @prec: Precision modifier.
+ * @wid: A width modifier.
+ * @prec: A precision modifier.
  * @len: A length modifier.
- * @output: A buffer_t struct containing a character array.
+ * @output: a buffer_t struct containing a character array.
  *
- * Return: The number of bytes stored to the buffer.
+ * Return: The number of bytes stroed to the buffer.
  */
 
 unsigned int convert_p(va_list args, buffer_t *output,
@@ -94,15 +94,13 @@ unsigned int convert_p(va_list args, buffer_t *output,
 	(void)len;
 
 	address = va_arg(args, unsigned long int);
-
 	if (address == '\0')
 		return (_memcpy(output, null, 5));
 
 	flags |= 32;
 	ret += convert_ubase(output, address, "0123456789abcdef",
 			flags, wid, prec);
-
-	ret += convert_width(output, ret, flags, wid);
+	ret += print_neg_width(output, ret, flags, wid);
 
 	return (ret);
 }
